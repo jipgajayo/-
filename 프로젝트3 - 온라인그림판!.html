@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <canvas id="canvas" width="578" height="200"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        context.beginPath();
+        context.moveTo(100, 150);
+        context.lineTo(450, 50);
+    </script>
+</body>
+</html>
+
+<body>
+    <script>
+    // 서버를 생성합니다.
+    const app = require('express')();
+    const server = require('http').(server);
+    const io = require('socket.io')(server);
+
+    // 서버를 실행합니다.
+    server.listen(52273);
+
+    app.get('/', (req, res) => {
+    res,sendFile(_dirname + '/index.html');
+    });
+
+    io.on('connetion', (socket) => {
+    socket.emit('news', {
+        hello: 'world'
+    });
+    socket,on('other event', (data) => {
+        console.log(data);
+        });
+    });
+    </script>
+</body>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io.connect('http://localhost');
+    socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('other event', {
+            my: 'data'
+        });
+    });
+</script>
+
+<body>
+    <script>
+    // 웹 서버를 생성하고 실행합니다.
+    const express = require('express');
+    const app = express();
+    const server = require('http').Server(app);
+    app.use(express.static('${__dirname}/public'));
+    sever.listen(52273);
+
+    // 소켓 서버를 생성하고 실행합니다.
+    const io = require('socket.io')(server);
+    io.on('connetion', (socket) => {
+        socketon('line', (data) => {
+            io.sockets.emit('line', data);
+    });
+});
+    </script>
+</body>
+
+
+<!DOCTYPE html>
+<html>
+    <title></title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(document).ready(function () {
+            //변수를 선언합니다.
+            let color="black"
+            let width=1;
+            let isDown = flase;
+            let newPoint, oldPoint;
+            // 소켓을 연결합니다.
+            const socket = io.connect();
+            // 캔버스를 추출합니다.
+            const canvas = document.getElementById('canvas');
+            const context = canvas.get.Context('2d');
+            // 마우스 이벤트를 연결합니다.
+            $(canvas).mousedown(function (event) {
+                isDown = true;
+                oldpoint = {
+                    x: event.pageX - $(this).position().left,
+                    y: event.pageY - $(this).position().top
+                };
+            });
+            $(canvas).mousemove(function (event) {
+                if(!isDown) {return;}
+                newpoint = {
+                    x: event.pageX - $(this).position().left,
+                    y: event.pageY - $(this).position().top
+                };
+                socket.emit('line', {
+                    x1: oldPoint.x,
+                    y1: oldPoint.y,
+                    x2: newPoint.x,
+                    y2: newPoint.y,
+                    color: color,
+                    width: width
+                });
+                oldPoint = newPoint;
+            });
+            $(canvas).mouseup(function (event) {
+                isDown = false;
+                oldPoint = {
+                    x: event.pageX - $(this).position().left,
+                    y: event.pageY - $(this).position().top
+                };
+            });
+            // 입력 양식 이벤트를 연결합니다.
+            $('#pen').click(function () {
+                width = 1;
+                color = 'black';
+                $('#width').val(width);
+            });
+            $('#eraser').click(function () {
+                width = 10;
+                color = 'white';
+                $('#width').val(width);
+            });
+            $('$width').change(function () {
+                width = $(this).val()
+            });
+            // 소켓 이벤트를 연결합니다.
+            socket.on('line', function (data) {
+                context.beginPath();
+                context.lineWidth = data.width;
+                context.strokeStyle = data.color;
+                context.moveTo(data.x1, data.y1);
+                context.lineTo(data.x2, data.y2);
+                context.stroke();
+            });
+        });
+    </script>
+    </head>
+<body>
+        <button id="pen">펜</button>
+        <button id="eraser">지우개</button>
+        <input id="width" type="range" min="1" max="10" value="1" />
+        <br />
+        <canvas id="canvas" width="1000" height="600"></canvas>
+</body>
+</html>
+
+<head>2302609 홍예진</head>
