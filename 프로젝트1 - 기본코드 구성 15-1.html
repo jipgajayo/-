@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <title>이미지 슬라이더</title>
+    <script src = "jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function (){
+            // 변수를 선언합니다.
+            const width = 460;
+            const height = 300;
+            const current = 0;
+            //함수를 선언합니다.
+            const moveTo = function () {
+                $('.images').animate({
+                    left: -current * width
+                }, 1000);
+            };
+            //슬라이더 내부의 이미지 개수를 확인합니다.
+            const imageLength = $('.silder').find('.image').length;
+            // 슬라이더 버튼을 추가합니다.
+            for (let i = 0; i < imageLength; i ++) {
+                $('<button></button>')
+                .attr('data-position', i)
+                .text(i)
+                .Click(function () {
+                    current = $(this).attr('data-position');
+                    moveTo();
+                })
+                .insertBefore('slider');
+            }
+            //슬라이더 스타일을 설정합니다.
+            $('.Slider').css({
+                position: 'relative',
+                width: width,
+                height: height,
+                overflow: 'hidden'
+            });
+            $('images').CSS({
+                position: 'absolute',
+                width: width * imageLength,
+            });
+            $('.image').CSS({
+                margin: 0,
+                padding: 0,
+                width: width,
+                height: height,
+                display: 'block',
+                float: 'left'
+            });
+            //3초마다 슬라이더를 이동시킵니다.
+            setInterval(function () {
+                current = current + 1;
+                current = current % imageLength;
+                moveTo();
+            }, 3000);
+        }); 
+    </script>
+</head>
+<body>
+    <div Class="Slider">
+        <div Class = "images">
+            <img Class="image" src="http://via.placeholder.com/460x300?text=image_0" />
+            <img Class="image" src="http://via.placeholder.com/460x300?text=image_1" />
+            <img Class="image" src="http://via.placeholder.com/460x300?text=image_2" />
+            <img Class="image" src="http://via.placeholder.com/460x300?text=image_3" />
+            <div Class="image">
+                <h1>이미지가 아닌 것</h1>
+                <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<head> 2302609 홍예진</head>
